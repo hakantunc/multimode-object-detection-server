@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('multimode-object-server:server');
 var http = require('http');
+var fs = require('fs');
 
 /**
  * Get port from environment and store in Express.
@@ -32,8 +33,10 @@ server.on('listening', onListening);
 
 io.on('connection', function(socket) {
   console.log('a user connected', socket.handshake);
-  socket.on('image', function(msg) {
-    console.log('image: ', msg);
+  socket.on('NewFrame', function(msg) {
+    console.log('NewFrame: ', msg);
+    let buff = new Buffer(msg, 'base64');
+    fs.writeFileSync(new Date() + '.jpg', buff);
   });
 });
 
