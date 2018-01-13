@@ -33,10 +33,11 @@ server.on('listening', onListening);
 
 io.on('connection', function(socket) {
   console.log('a user connected', socket.handshake);
-  socket.on('NewFrame', function(msg) {
-    console.log('NewFrame: ', msg);
-    let buff = new Buffer(msg, 'base64');
-    fs.writeFileSync(new Date() + '.jpg', buff);
+  socket.on('NewFrame', function(msg, ack) {
+    ack("Got New Frame" + Date());
+    console.log('NewFrame: ', Date());
+    // let buff = new Buffer(msg, 'base64');
+    // fs.writeFileSync(new Date() + '.jpg', buff);
   });
 });
 
